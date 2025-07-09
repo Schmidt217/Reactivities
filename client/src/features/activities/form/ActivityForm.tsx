@@ -1,22 +1,30 @@
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import type { FormEvent } from "react";
+import { useActivities } from "../../../lib/hooks/useActivities";
 
 type Props = {
 	activity?: Activity;
 	closeForm: () => void;
-	submitForm: (activity: Activity) => void;
 };
 
-function ActivityForm({ activity, closeForm, submitForm }: Props) {
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+function ActivityForm({ activity, closeForm }: Props) {
+	const { updateActivity, createActivity } = useActivities();
+
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const formData = new FormData(e.currentTarget);
 		const data: { [key: string]: FormDataEntryValue } = {};
 		formData.forEach((value, key) => {
 			data[key] = value;
 		});
-		if (activity) data.id = activity.id;
-		submitForm(data as unknown as Activity);
+		if (activity) {
+			data.id = activity.id;
+			await updateActivity.mutateAsync(data as unknown as Activity);
+			closeForm();
+		} else {
+			await createActivity.mutateAsync(data as unknown as Activity);
+			closeForm();
+		}
 	};
 
 	return (
@@ -48,8 +56,12 @@ function ActivityForm({ activity, closeForm, submitForm }: Props) {
 				<TextField
 					name="date"
 					label="date"
-					defaultValue={activity?.date}
-					type="datetime-local"
+					defaultValue={
+						activity?.date
+							? new Date(activity.date).toISOString().split("T")[0]
+							: new Date().toISOString().split("T")[0]
+					}
+					type="date"
 					InputLabelProps={{
 						shrink: true,
 					}}
@@ -60,7 +72,12 @@ function ActivityForm({ activity, closeForm, submitForm }: Props) {
 					<Button onClick={closeForm} color="inherit">
 						Cancel
 					</Button>
-					<Button type="submit" color="success" variant="contained">
+					<Button
+						type="submit"
+						color="success"
+						variant="contained"
+						loading={updateActivity.isPending || createActivity.isPending}
+					>
 						Submit
 					</Button>
 				</Box>

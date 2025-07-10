@@ -43,6 +43,7 @@ function NavBar() {
               <MenuItemLink to="/activities">Activities</MenuItemLink>
               <MenuItemLink to="/createActivity">Create Activity</MenuItemLink>
               <MenuItemLink to="/counter">Counter</MenuItemLink>
+              <MenuItemLink to="/errors">Test Errors</MenuItemLink>
             </Box>
             <MenuItemLink to="/">User menu</MenuItemLink>
           </Toolbar>

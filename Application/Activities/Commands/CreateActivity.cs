@@ -21,7 +21,7 @@ public class CreateActivity
         {
             var activity = mapper.Map<Activity>(request.ActivityDto);
             context.Activities.Add(activity);
-            await context.SaveChangesAsync(cancellationToken);
+           
             var result = await context.SaveChangesAsync(cancellationToken) > 0;
 
             return !result

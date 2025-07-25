@@ -1,9 +1,7 @@
 import { z } from 'zod';
+import { requiredString } from '../util/util';
 
 export type ActivitySchema = z.infer<typeof activitySchema>;
-
-const requiredString = (fieldName: string) =>
-  z.string().min(1, { message: `${fieldName} is required` });
 
 export const activitySchema = z.object({
   title: requiredString('Title'),

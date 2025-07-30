@@ -28,5 +28,6 @@ public class MappingProfiles : Profile
                 s.User.Id))
             .ForMember(d => d.ImageUrl, o => o.MapFrom(s =>
                 s.User.ImageUrl));
+        CreateMap<User, UserProfile>();
     }
 }

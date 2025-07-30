@@ -1,16 +1,16 @@
-import { Card, Badge, CardMedia, Box, Typography, Button } from '@mui/material';
+import { Card, CardMedia, Box, Typography, Chip } from '@mui/material';
 import { Link } from 'react-router';
 import { formatDate } from '../../../lib/util/util';
+import { useActivities } from '../../../lib/hooks/useActivities';
+import StyledButton from '../../../app/shared/components/StyledButton';
 
 type Props = {
   activity: Activity;
 };
 
 function ActivityDetailsHeader({ activity }: Props) {
-  const isCancelled = false;
-  const isHost = true;
-  const isGoing = true;
-  const loading = false;
+  const { updateAttendance } = useActivities(activity.id);
+  const { isCancelled, isHost, isGoing, hostDisplayName } = activity;
 
   return (
     <Card
@@ -22,10 +22,16 @@ function ActivityDetailsHeader({ activity }: Props) {
       }}
     >
       {isCancelled && (
-        <Badge
-          sx={{ position: 'absolute', left: 40, top: 20, zIndex: 1000 }}
+        <Chip
+          sx={{
+            position: 'absolute',
+            left: 40,
+            top: 20,
+            zIndex: 1000,
+            borderRadius: 1,
+          }}
           color="error"
-          badgeContent="Cancelled"
+          label="Cancelled"
         />
       )}
       <CardMedia
@@ -64,7 +70,7 @@ function ActivityDetailsHeader({ activity }: Props) {
               to={`/profiles/username`}
               style={{ color: 'white', fontWeight: 'bold' }}
             >
-              Bob
+              {hostDisplayName}
             </Link>
           </Typography>
         </Box>
@@ -73,14 +79,15 @@ function ActivityDetailsHeader({ activity }: Props) {
         <Box sx={{ display: 'flex', gap: 2 }}>
           {isHost ? (
             <>
-              <Button
+              <StyledButton
                 variant="contained"
                 color={isCancelled ? 'success' : 'error'}
-                onClick={() => {}}
+                onClick={() => updateAttendance.mutate(activity.id)}
+                disabled={updateAttendance?.isPending}
               >
                 {isCancelled ? 'Re-activate Activity' : 'Cancel Activity'}
-              </Button>
-              <Button
+              </StyledButton>
+              <StyledButton
                 variant="contained"
                 color="primary"
                 component={Link}
@@ -88,17 +95,17 @@ function ActivityDetailsHeader({ activity }: Props) {
                 disabled={isCancelled}
               >
                 Manage Event
-              </Button>
+              </StyledButton>
             </>
           ) : (
-            <Button
+            <StyledButton
               variant="contained"
               color={isGoing ? 'primary' : 'info'}
-              onClick={() => {}}
-              disabled={isCancelled || loading}
+              onClick={() => updateAttendance.mutate(activity.id)}
+              disabled={updateAttendance?.isPending}
             >
               {isGoing ? 'Cancel Attendance' : 'Join Activity'}
-            </Button>
+            </StyledButton>
           )}
         </Box>
       </Box>

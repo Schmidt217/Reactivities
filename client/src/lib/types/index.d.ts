@@ -66,3 +66,12 @@ type LocationIQAddress = {
   country: string;
   country_code: string;
 };
+
+type ChatComment = {
+  id: string;
+  createdAt: Date;
+  body: string;
+  userId: string;
+  displayName: string;
+  imageUrl?: string;
+}

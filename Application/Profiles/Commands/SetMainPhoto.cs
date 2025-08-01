@@ -12,9 +12,9 @@ public class SetMainPhoto
         public required string PhotoId { get; set; }
     }
     
-    public class Handler(AppDbContext context, IUserAccessor userAccessor, IPhotoService photoService) : IRequestHandler<DeletePhoto.Command, Result<Unit>>
+    public class Handler(AppDbContext context, IUserAccessor userAccessor) : IRequestHandler<Command, Result<Unit>>
     {
-        public async Task<Result<Unit>> Handle(DeletePhoto.Command request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
             var user = await userAccessor.GetUserWithPhotosAsync();
             var photo = user.Photos.FirstOrDefault(x => x.Id == request.PhotoId);

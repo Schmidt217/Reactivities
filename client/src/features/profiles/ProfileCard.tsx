@@ -45,7 +45,7 @@ export default function ProfileCard({ profile }: Props) {
             {profile.following && (
               <Chip
                 size="small"
-                label="follwing"
+                label="Following"
                 color="secondary"
                 variant="outlined"
               />

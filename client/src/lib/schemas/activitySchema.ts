@@ -1,19 +1,23 @@
 import { z } from 'zod';
 import { requiredString } from '../util/util';
 
-export type ActivitySchema = z.infer<typeof activitySchema>;
-
 export const activitySchema = z.object({
   title: requiredString('Title'),
   description: requiredString('Description'),
   category: requiredString('Category'),
-  date: z.coerce.date({
+  date: z.date({
     message: 'Date is required',
   }),
   location: z.object({
-    venue: z.string().min(1, 'Venue is required'),
-    latitude: z.coerce.number(),
-    longitude: z.coerce.number(),
+    venue: requiredString('Venue'),
+    latitude: z.number({
+      message: 'Latitude must be a number',
+    }),
+    longitude: z.number({
+      message: 'Longitude must be a number',
+    }),
     city: z.string().optional(),
   }),
 });
+
+export type ActivitySchema = z.infer<typeof activitySchema>;

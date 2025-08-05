@@ -9,7 +9,7 @@ public class Photo
     public required string PublicId { get; set; }
     
     // nav properties
-    public string UserId { get; set; }
+    public required string UserId { get; set; }
     
     [JsonIgnore]
     public User User { get; set; } = null!;

@@ -25,9 +25,13 @@ export default function PhotoUploadWidget({ uploadPhoto, loading }: Props) {
 
   const onCrop = useCallback(() => {
     const cropper = cropperRef.current?.cropper;
-    cropper?.getCroppedCanvas().toBlob(blob => {
-      uploadPhoto(blob as Blob);
-    });
+    cropper?.getCroppedCanvas().toBlob(
+      blob => {
+        uploadPhoto(blob as Blob);
+      },
+      'image/jpeg',
+      0.8
+    );
   }, [uploadPhoto]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });

@@ -19,8 +19,13 @@ public class AddPhoto
     {
         public async Task<Result<Photo>> Handle(Command request, CancellationToken cancellationToken)
         {
+            if (request.File.Length > 10485760) // 10MB limit
+            {
+                return Result<Photo>.Failure("File too large", 400);
+            }
             var uploadResult = await photoService.UploadPhoto(request.File);
             if (uploadResult == null) return Result<Photo>.Failure("Failed to upload photo", 400);
+          
             
             var user = await userAccessor.GetUserAsync();
             var photo = new Photo

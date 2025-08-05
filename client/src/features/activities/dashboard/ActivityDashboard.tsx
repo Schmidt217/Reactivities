@@ -5,10 +5,17 @@ import ActivityFilters from './ActivityFilters';
 function ActivityDashboard() {
   return (
     <Grid2 container spacing={3}>
-      <Grid2 size={8}>
+      <Grid2 size={8} paddingBottom={3}>
         <ActivityList />
       </Grid2>
-      <Grid2 size={4}>
+      <Grid2
+        size={4}
+        sx={{
+          position: 'sticky',
+          top: 112,
+          alignSelf: 'flex-start',
+        }}
+      >
         <ActivityFilters />
       </Grid2>
     </Grid2>

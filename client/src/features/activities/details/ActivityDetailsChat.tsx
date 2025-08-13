@@ -77,7 +77,7 @@ const ActivityDetailsChat = observer(function ActivityDetailsChat() {
             </form>
           </div>
 
-          <Box sx={{ height: 400, overflow: 'auto' }}>
+          <Box sx={{ height: { xs: 200, sm: 300, md: 400 }, overflow: 'auto' }}>
             {commentStore.comments.map(comment => (
               <Box key={comment.id} sx={{ display: 'flex', my: 2 }}>
                 <Avatar

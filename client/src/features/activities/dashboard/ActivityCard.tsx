@@ -28,7 +28,12 @@ function ActivityCard({ activity }: Props) {
 
   return (
     <Card elevation={3} sx={{ borderRadius: 3 }}>
-      <Box display="flex" alignItems="center" justifyContent="space-between">
+      <Box
+        display="flex"
+        flexDirection={{ xs: 'column', sm: 'row' }}
+        alignItems={{ xs: 'flex-start', sm: 'center' }}
+        justifyContent="space-between"
+      >
         <CardHeader
           avatar={
             <Avatar
@@ -51,7 +56,14 @@ function ActivityCard({ activity }: Props) {
             </>
           }
         />
-        <Box display="flex" flexDirection="column" gap={2} mr={2}>
+        <Box
+          display="flex"
+          flexDirection={{ xs: 'row', sm: 'column' }}
+          gap={2}
+          mr={{ xs: 0, sm: 2 }}
+          ml={{ xs: 2, sm: 0 }}
+          mb={{ xs: 2, sm: 0 }}
+        >
           {(activity.isHost || activity.isGoing) && (
             <Chip
               label={label}
@@ -69,19 +81,20 @@ function ActivityCard({ activity }: Props) {
       <Divider sx={{ mb: 3 }} />
 
       <CardContent sx={{ p: 0 }}>
-        <Box display="flex" alignItems="center" mb={2} px={2}>
+        <Box display="flex" flexWrap="wrap" alignItems="center" mb={2} px={2}>
           <Box display="flex" flexGrow={0} alignItems="center">
             <AccessTime sx={{ mr: 1 }} />
             <Typography variant="body2" noWrap>
               {formatDate(activity.date)}
             </Typography>
           </Box>
-          <Place sx={{ ml: 3, mr: 1 }} />
+          <Place sx={{ ml: { xs: 0, sm: 3 }, mr: 1 }} />
           <Typography variant="body2">{activity.venue}</Typography>
         </Box>
         <Divider />
         <Box
           display="flex"
+          flexWrap="wrap"
           gap={2}
           sx={{ backgroundColor: 'grey.200', py: 3, pl: 3 }}
         >
@@ -97,7 +110,14 @@ function ActivityCard({ activity }: Props) {
           to={`/activities/${activity.id}`}
           size="medium"
           variant="contained"
-          sx={{ display: 'flex', justifySelf: 'self-end', borderRadius: 3 }}
+          sx={{
+            display: 'block',
+            width: { xs: '100%', sm: 'auto' },
+            justifySelf: 'self-end',
+            borderRadius: 3,
+            mt: 2,
+            textAlign: 'center',
+          }}
         >
           View
         </Button>

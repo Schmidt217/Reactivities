@@ -35,14 +35,23 @@ function ActivityDetailsSidebar({ activity }: Props) {
       </Paper>
       <Paper sx={{ padding: 2 }}>
         {activity.attendees.map(attendee => (
-          <Grid2 key={attendee.id} container alignItems="center">
-            <Grid2 size={8}>
+          <Grid2
+            key={attendee.id}
+            container
+            alignItems={{ xs: 'flex-start', sm: 'center' }}
+            flexDirection={{ xs: 'column', sm: 'row' }}
+          >
+            <Grid2 size={{ xs: 12, sm: 8 }}>
               <List sx={{ display: 'flex', flexDirection: 'column' }}>
                 <ListItem component={Link} to={`/profiles/${attendee.id}`}>
                   <ListItemAvatar>
                     <Avatar
                       variant="rounded"
-                      sx={{ width: 75, height: 75, mr: 3 }}
+                      sx={{
+                        width: { xs: 50, sm: 75 },
+                        height: { xs: 50, sm: 75 },
+                        mr: 3,
+                      }}
                       alt={`${attendee.displayName} image`}
                       src={`${attendee?.imageUrl}`}
                     />
@@ -59,12 +68,14 @@ function ActivityDetailsSidebar({ activity }: Props) {
               </List>
             </Grid2>
             <Grid2
-              size={4}
+              size={{ xs: 12, sm: 4 }}
               sx={{
                 display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-end',
+                flexDirection: { xs: 'row', sm: 'column' },
+                alignItems: { xs: 'center', sm: 'flex-end' },
                 gap: 1,
+                ml: { xs: 2, sm: 0 },
+                mb: { xs: 1, sm: 0 },
               }}
             >
               {activity.hostId === attendee.id && (

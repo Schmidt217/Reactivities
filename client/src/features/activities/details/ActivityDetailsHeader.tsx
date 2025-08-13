@@ -48,16 +48,16 @@ function ActivityDetailsHeader({ activity }: Props) {
           color: 'white',
           padding: 2,
           display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'flex-end',
+          flexDirection: { xs: 'column', sm: 'row' },
+          justifyContent: { xs: 'flex-start', sm: 'space-between' },
+          alignItems: { xs: 'flex-start', sm: 'flex-end' },
           background:
             'linear-gradient(to top, rgba(0, 0, 0, 1.0), transparent)',
           boxSizing: 'border-box',
         }}
       >
         {/* Text Section */}
-        <Box>
+        <Box mb={{ xs: 2, sm: 0 }}>
           <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
             {activity.title}
           </Typography>
@@ -76,7 +76,14 @@ function ActivityDetailsHeader({ activity }: Props) {
         </Box>
 
         {/* Buttons aligned to the right */}
-        <Box sx={{ display: 'flex', gap: 2 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            gap: 2,
+            width: { xs: '100%', sm: 'auto' },
+          }}
+        >
           {isHost ? (
             <>
               <StyledButton
@@ -84,6 +91,7 @@ function ActivityDetailsHeader({ activity }: Props) {
                 color={isCancelled ? 'success' : 'error'}
                 onClick={() => updateAttendance.mutate(activity.id)}
                 disabled={updateAttendance?.isPending}
+                sx={{ width: { xs: '100%', sm: 'auto' } }}
               >
                 {isCancelled ? 'Re-activate Activity' : 'Cancel Activity'}
               </StyledButton>
@@ -93,6 +101,7 @@ function ActivityDetailsHeader({ activity }: Props) {
                 component={Link}
                 to={`/manage/${activity.id}`}
                 disabled={isCancelled}
+                sx={{ width: { xs: '100%', sm: 'auto' } }}
               >
                 Manage Event
               </StyledButton>
@@ -100,9 +109,10 @@ function ActivityDetailsHeader({ activity }: Props) {
           ) : (
             <StyledButton
               variant="contained"
-              color={isGoing ? 'primary' : 'info'}
+              color="primary"
               onClick={() => updateAttendance.mutate(activity.id)}
               disabled={updateAttendance?.isPending}
+              sx={{ width: { xs: '100%', sm: 'auto' } }}
             >
               {isGoing ? 'Cancel Attendance' : 'Join Activity'}
             </StyledButton>

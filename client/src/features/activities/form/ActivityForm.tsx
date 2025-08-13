@@ -80,14 +80,18 @@ function ActivityForm() {
           multiline
           rows={3}
         />
-        <Box display="flex" gap={3}>
-          <SelectInput
-            items={categoryOptions}
-            label="Category"
-            control={control}
-            name="category"
-          />
-          <DateTimeInput label="Date" control={control} name="date" />
+        <Box display="flex" flexDirection={{ xs: 'column', sm: 'row' }} gap={3}>
+          <Box sx={{ flexGrow: 1 }}>
+            <SelectInput
+              items={categoryOptions}
+              label="Category"
+              control={control}
+              name="category"
+            />
+          </Box>
+          <Box sx={{ flexGrow: 1 }}>
+            <DateTimeInput label="Date" control={control} name="date" />
+          </Box>
         </Box>
         <LocationInput
           control={control}
@@ -95,8 +99,17 @@ function ActivityForm() {
           name="location"
         />
 
-        <Box display="flex" justifyContent="end" gap={3}>
-          <Button color="inherit" onClick={() => navigate(-1)}>
+        <Box
+          display="flex"
+          flexDirection={{ xs: 'column', sm: 'row' }}
+          justifyContent={{ xs: 'center', sm: 'end' }}
+          gap={3}
+        >
+          <Button
+            color="inherit"
+            onClick={() => navigate(-1)}
+            sx={{ width: { xs: '100%', sm: 'auto' } }}
+          >
             Cancel
           </Button>
           <Button
@@ -104,6 +117,7 @@ function ActivityForm() {
             color="success"
             variant="contained"
             loading={updateActivity.isPending || createActivity.isPending}
+            sx={{ width: { xs: '100%', sm: 'auto' } }}
           >
             Submit
           </Button>
